@@ -31,16 +31,16 @@ int set_response_idx(int val) {
 
 //get_values
 const cv::Mat* get_values(void) {
-	/* float values[nb_lignes][nb_col];
-	for (int i=0; i<nb_lignes; ++i) {
-		for (int j=0; j<nb_col; ++j) {
-			values[i][j] = matrice_readCSV[i][j];
-		}
-	}
-	cv::Mat mat(nb_lignes, nb_col, CV_32FC1, values);
-	return &mat; */
 	return &matrice_readCSV;
 }
 
 //get reponses
-const cv::Mat* get_responses(void);
+const cv::Mat* get_responses(void) {
+	float responses[nb_lignes];
+    for(int i = 0; i < nb_echantillons; ++i ) {
+        responses[i] = matrice_readCSV.at<float>(i,col_resp); 
+    }
+    cv::Mat matResponses(nb_lignes, 1, CV_32FC1, responses);
+    return &matResponses;
+}
+
