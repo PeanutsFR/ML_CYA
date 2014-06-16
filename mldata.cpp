@@ -44,3 +44,48 @@ const cv::Mat* get_responses(void) {
     return &matResponses;
 }
 
+int MLData::read_csv(QString filepath){
+    QString ligne,nombre;
+    QFile file(filepath);
+    QTextStream in(&file);
+    QStringList l,liste_classes;
+    int nbLignes = 0;
+
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    while(!in.atEnd()){
+        ligne = file.readLine();
+        nbLignes++;
+        std::cout << ligne.toStdString() << std::endl;
+        l = ligne.split(separator);
+
+
+
+        if(nbLignes == 1)
+            nb_col = l.size();
+
+        if(!l.isEmpty())
+        for(int i=0;i<l.size();i++){
+            std::cout << "col " << i << " = " << l[i].toStdString() << " , ";
+            if( (atof(l[i].toStdString().c_str())) == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 ){
+                if(!liste_classes.contains(l[i])){
+                    std::cout << "Nouvelle classe : " << l[i].toStdString() << " / " << (atof(l[i].toStdString().c_str())) << " ligne : " << nbLignes << std::endl;
+                    liste_classes.append(l[i]);
+                }
+            }
+        }
+
+        l.clear();
+    }
+
+    nbLignes = nbLignes - 1; // Retire la derniere ligne
+    nb_lignes = nbLignes;
+
+    std::cout << std::endl << " Matrice : " << nb_lignes << " x " << nb_col << std::endl;
+    std::cout << std::endl << "Celle-ci contient " << liste_classes.size() << " classes : " << std::endl;
+    for(int j=0;j<liste_classes.size();j++){
+        std::cout << "classe " << j+1 << " : " << liste_classes[j].toStdString() << std::endl;
+    }
+
+    return 0;
+}
+
