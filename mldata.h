@@ -51,9 +51,9 @@ public:
 
 
 protected:
-    char separator; // separateur
+    char separator; // séparateur
     int compteur;
-    int col_resp; //colonne des reponsesé
+    int col_resp; //colonne des réponses
     std::map<std::string,int> correspondances; // Correspondance labels -> id_classe
     int nb_col;
     int nb_lignes;
