@@ -15,11 +15,15 @@ MLData::MLData()
     this->separator=',';
     this->valeurs = NULL;
     this->responses = NULL;
+    this->train_sample = NULL;
+    this->test_sample = NULL;
 }
 
 MLData::~MLData(){
     if (valeurs != NULL) delete(valeurs);
     if (responses != NULL) delete(responses);
+    if (train_sample != NULL) delete(train_sample);
+    if (test_sample != NULL) delete(test_sample);
 }
 
 //set_response_idx
@@ -35,40 +39,56 @@ const cv::Mat* MLData::get_values(void) {
 
 //get reponses
 const cv::Mat* MLData::get_responses(void) {
-
     // matrice colonne qui contient les classes
     responses = new cv::Mat(valeurs->rows, 1, CV_32FC1);
 
     for (int i=0; i<valeurs->rows; ++i) {
         responses->at<float>(i, 0) =valeurs->at<float>(i, col_resp);
     }
-
     return responses;
 }
 
 
 //set_train_test_split
-/* void set_train_test_split(const CvTrainTestSplit * spl) {
-	
-	// créer deux attributs pour stocker :
-	// _ train sample
-	// _ test sample
-	// On a ensuite 2 getters pour y accéder
-    int lignes = valeurs->rows;
-    int colonnes = valeurs->cols;
+/*
+void set_train_test_split(const CvTrainTestSplit * spl) {
 
-	CvMat train_sample(spl->count);
-	CvMat test_sample();
+	train_sample = new cv::Mat(spl->count, valeurs->cols, CV_32FC1);
+	test_sample = new cv::Mat(valeurs->rows - spl->count, valeurs->cols, CV_32FC1);
 
-	std::vector <int> seeds;
-	for (int cont = 0; cont < matrix.rows; cont++)
-		seeds.push_back(cont);
-	cv::randShuffle(seeds);
+	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
+	if (spl->mix == true) {
 
-	cv::Mat output;
-	for (int cont = 0; cont < matrix.rows; cont++)
-		output.push_back(patternMatrix.row(seeds[cont]));
-	return output;
+		// traitement du train_sample
+		std::vector<int> seeds_train;
+		for (int i=0; i < spl->count; ++i)
+			seeds_train.push_back(i);
+		cv::randShuffle(seeds_train);
+
+		for (int i=0; i < spl->count; ++i)
+			train_sample->row(i) = valeurs->row(seeds_train[i]);
+
+		// traitement du test_sample
+		std::vector<int> seeds_test;
+		for (int i=spl->count; i < valeurs->rows; ++i)
+			seeds_test.push_back(i);
+		cv::randShuffle(seeds_test);
+
+		for (int i=0; i < valeurs->rows - spl->count; ++i)
+			test_sample->row(i) = valeurs->row(seeds_test[i]);
+		
+	// sinon, remplir sans mélanger
+	} else { 
+
+		for (int i=0; i < valeurs->rows; ++i) {
+				if (i < spl->count)
+					train_sample->row(i) = valeurs->row(i);
+				else
+					test_sample->row(i) = valeurs->row(i);
+			}
+			
+		}
+	}
 }
 */
 
