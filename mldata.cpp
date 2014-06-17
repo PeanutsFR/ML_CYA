@@ -1,6 +1,8 @@
 #include "mldata.h"
 #include <iostream>
 #include <QFile>
+#include <QString>
+#include <QTextStream>
 
 MLData::MLData()
 {
@@ -12,16 +14,7 @@ MLData::~MLData(){
 
 }
 
-int MLData::read_csv(QString filepath){
-    QString ligne;
-    QFile file(filepath);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    ligne = file.readLine();
-    std::cout << ligne.toStdString();
-    return 0;
-}
-
-cv::Mat matrice_readCSV; // matrice remplie depuis le parsing du fichier
+/* cv::Mat matrice_readCSV; // matrice remplie depuis le parsing du fichier
 
 //set_response_idx
 int set_response_idx(int val) {
@@ -43,6 +36,34 @@ const cv::Mat* get_responses(void) {
     cv::Mat matResponses(nb_lignes, 1, CV_32FC1, responses);
     return &matResponses;
 }
+*/
+
+
+//set_train_test_split
+/* void set_train_test_split(const CvTrainTestSplit * spl) {
+	
+	// créer deux attributs pour stocker :
+	// _ train sample
+	// _ test sample
+	// On a ensuite 2 getters pour y accéder
+	int lignes = matrice_readCSV.rows;
+	int colonnes = matrice_readCSV.cols;
+
+	CvMat train_sample(spl->count);
+	CvMat test_sample();
+
+	std::vector <int> seeds;
+	for (int cont = 0; cont < matrix.rows; cont++)
+		seeds.push_back(cont);
+	cv::randShuffle(seeds);
+
+	cv::Mat output;
+	for (int cont = 0; cont < matrix.rows; cont++)
+		output.push_back(patternMatrix.row(seeds[cont]));
+	return output;
+}
+*/
+
 
 int MLData::read_csv(QString filepath){
     QString ligne,nombre;
@@ -68,7 +89,7 @@ int MLData::read_csv(QString filepath){
             std::cout << "col " << i << " = " << l[i].toStdString() << " , ";
             if( (atof(l[i].toStdString().c_str())) == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 ){
                 if(!liste_classes.contains(l[i])){
-                    std::cout << "Nouvelle classe : " << l[i].toStdString() << " / " << (atof(l[i].toStdString().c_str())) << " ligne : " << nbLignes << std::endl;
+                    std::cout << "Nouvelle classe :" << l[i].toStdString().c_str() << "/" << (atof(l[i].toStdString().c_str())) << " ligne : " << nbLignes << std::endl;
                     liste_classes.append(l[i]);
                 }
             }

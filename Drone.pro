@@ -36,7 +36,7 @@ FORMS    += mainwindow.ui \
 
 INCLUDEPATH += -D__STDC_CONSTANT_MACROS
 INCLUDEPATH += \\usr\\local\\include
-INCLUDEPATH += \\home\\emip\Drone\\Drone
+INCLUDEPATH += \\home\\bouazime\\Documents\\stage_drone_cmi\\algorithmes\\ml_cya_git
 INCLUDEPATH += \\usr\\include
 
 LIBS += -L\\usr\\local\\lib \

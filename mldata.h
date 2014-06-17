@@ -29,7 +29,7 @@ public:
     }
 
     //set_train_test_split
-    void set_train_test_split(void);
+    void set_train_test_split(const CvTrainTestSplit * spl);
     //get_train_sample
     const cv::Mat* get_train_sample_idx(void);
     //get_test_sample_idx
