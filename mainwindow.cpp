@@ -203,7 +203,7 @@ void MainWindow::test(QString fichier){
 
     MLData data;
     data.read_csv(fichier);
-    data.set_response_idx(1);
+    data.set_response_idx(0);
     //const cv::Mat* values = data.get_values();
     const cv::Mat* responses = data.get_responses();
 

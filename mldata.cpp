@@ -97,7 +97,7 @@ int MLData::read_csv(QString filepath){
     QString ligne,nombre;
     QFile file(filepath);
     QTextStream in(&file);
-    QStringList l,liste_classes;
+    QStringList l,l2,liste_classes;
 
     std::vector< std::vector< double > > mat;
 
@@ -109,7 +109,9 @@ int MLData::read_csv(QString filepath){
         ligne = file.readLine();
         nbLignes++;
         //Bstd::cout << ligne.toStdString() << std::endl;
-        l = ligne.split(separator);
+        l2 = ligne.split('\n',QString::SkipEmptyParts);
+        l = l2.at(0).split(separator,QString::SkipEmptyParts);
+
 
         if(nbLignes == 1)
             nb_col = l.size();
@@ -122,11 +124,16 @@ int MLData::read_csv(QString filepath){
                         val = lexical_cast<double>(l[i].toStdString());
                     }
                     catch(bad_lexical_cast &){
-                        val = 0;
+                        try{
+                            val = lexical_cast<int>(l[i].toStdString());
+                        }
+                        catch(bad_lexical_cast &){
+                               val = 0;
+                        }
                     }
 
                     //std::cout << "col " << i << " = " << l[i].toStdString() << " / " << val << " , ";
-                    if( val == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 ){
+                    if( val == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 && l[i].compare("0.00") != 0){
                         if(!liste_classes.contains(l[i])){
                             //std::cout << "Nouvelle classe : " << l[i].toStdString() << " / " << (strtod(l[i].toStdString().c_str(),NULL)) << " / " << val  << " | ligne : " << nbLignes << std::endl;
                             liste_classes.append(l[i]);
@@ -153,13 +160,13 @@ int MLData::read_csv(QString filepath){
         }
     }
 
-    //std::cout << std::endl << " Matrice : " << nb_lignes << " x " << nb_col << std::endl;
-    //std::cout << std::endl << "Celle-ci contient " << liste_classes.size() << " classes : " << std::endl;
-    //std::cout << *valeurs << std::endl;
+    std::cout << std::endl << " Matrice : " << nb_lignes << " x " << nb_col << std::endl;
+    std::cout << std::endl << "Celle-ci contient " << liste_classes.size() << " classes : " << std::endl;
+    std::cout << *valeurs << std::endl;
 
     std::map<std::string,int>::iterator it = correspondances.begin();
     for(int j=0;j<liste_classes.size();j++){
-        //std::cout << "classe " << j+1 << " : " << liste_classes[j].toStdString() << std::endl;
+        std::cout << "classe " << j+1 << " : " << liste_classes[j].toStdString() << std::endl;
         correspondances.insert(it,std::pair<std::string,int>(liste_classes[j].toStdString(),j+1));
     }
 
