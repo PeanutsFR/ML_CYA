@@ -203,6 +203,13 @@ void MainWindow::test(QString fichier){
 
     MLData data;
     data.read_csv(fichier);
+    data.set_response_idx(1);
+    //const cv::Mat* values = data.get_values();
+    const cv::Mat* responses = data.get_responses();
+
+    //std::cout << *values << std::endl;
+    std::cout << *responses << std::endl;
+
     //Ouverture et chargement du fichier
     //CvMLData data;
     //data.read_csv("/home/emip/Drone/Drone/data/iris/iris.data");
