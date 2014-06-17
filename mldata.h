@@ -29,7 +29,7 @@ public:
     }
 
     //set_train_test_split
-    void set_train_test_split(const CvTrainTestSplit * spl);
+    // void set_train_test_split(const CvTrainTestSplit * spl);
     //get_train_sample
     const cv::Mat* get_train_sample_idx(void);
     //get_test_sample_idx
@@ -51,6 +51,8 @@ public:
 
 
 protected:
+    cv::Mat* valeurs;
+    cv::Mat* responses;
     char separator; // séparateur
     int compteur;
     int col_resp; //colonne des réponses
