@@ -29,7 +29,8 @@ HEADERS  += mainwindow.h \
     ardrone/uvlc.h \
     ardrone/ardrone.h \
     dialog.h \
-    mldata.h
+    mldata.h \
+    traintestsplit.h
 
 FORMS    += mainwindow.ui \
     dialog.ui

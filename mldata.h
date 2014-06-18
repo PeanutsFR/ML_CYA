@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <opencv2/core/core.hpp>
+#include <traintestsplit.h>
 
 class MLData
 {
@@ -29,7 +30,7 @@ public:
     }
 
     //set_train_test_split
-    //void set_train_test_split(const CvTrainTestSplit * spl);
+    void set_train_test_split(const struct TrainTestSplit * spl);
     //get_train_sample
     const cv::Mat* get_train_sample_idx(void);
     //get_test_sample_idx

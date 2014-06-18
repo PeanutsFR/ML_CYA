@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <boost/lexical_cast.hpp>
+#include <traintestsplit.h>
 
 using boost::lexical_cast;
 using boost::bad_lexical_cast;
@@ -50,47 +51,45 @@ const cv::Mat* MLData::get_responses(void) {
 
 
 //set_train_test_split
-/*
-void set_train_test_split(const CvTrainTestSplit * spl) {
+void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 
-	train_sample = new cv::Mat(spl->count, valeurs->cols, CV_32FC1);
-	test_sample = new cv::Mat(valeurs->rows - spl->count, valeurs->cols, CV_32FC1);
+    train_sample = new cv::Mat(spl->train_sample_part.count, valeurs->cols, CV_32FC1);
+    test_sample = new cv::Mat(valeurs->rows - spl->train_sample_part.count, valeurs->cols, CV_32FC1);
 
 	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
 	if (spl->mix == true) {
 
 		// traitement du train_sample
 		std::vector<int> seeds_train;
-		for (int i=0; i < spl->count; ++i)
+        for (int i=0; i < spl->train_sample_part.count; ++i)
 			seeds_train.push_back(i);
 		cv::randShuffle(seeds_train);
 
-		for (int i=0; i < spl->count; ++i)
+        for (int i=0; i < spl->train_sample_part.count; ++i)
 			train_sample->row(i) = valeurs->row(seeds_train[i]);
 
 		// traitement du test_sample
 		std::vector<int> seeds_test;
-		for (int i=spl->count; i < valeurs->rows; ++i)
+        for (int i=spl->train_sample_part.count; i < valeurs->rows; ++i)
 			seeds_test.push_back(i);
 		cv::randShuffle(seeds_test);
 
-		for (int i=0; i < valeurs->rows - spl->count; ++i)
+        for (int i=0; i < valeurs->rows - spl->train_sample_part.count; ++i)
 			test_sample->row(i) = valeurs->row(seeds_test[i]);
 		
 	// sinon, remplir sans mélanger
 	} else { 
 
 		for (int i=0; i < valeurs->rows; ++i) {
-				if (i < spl->count)
+                if (i < spl->train_sample_part.count)
 					train_sample->row(i) = valeurs->row(i);
 				else
 					test_sample->row(i) = valeurs->row(i);
 			}
 			
 		}
-	}
 }
-*/
+
 
 
 int MLData::read_csv(QString filepath){
