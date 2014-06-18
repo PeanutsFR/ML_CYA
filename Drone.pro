@@ -23,13 +23,15 @@ SOURCES += main.cpp\
     ardrone/command.cpp \
     ardrone/ardrone.cpp \
     dialog.cpp \
-    mldata.cpp
+    mldata.cpp \
+    traintestsplit.cpp
 
 HEADERS  += mainwindow.h \
     ardrone/uvlc.h \
     ardrone/ardrone.h \
     dialog.h \
     mldata.h \
+    traintestsplit.h \
     traintestsplit.h
 
 FORMS    += mainwindow.ui \

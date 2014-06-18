@@ -18,5 +18,4 @@ struct TrainTestSplit
     bool mix;
 };
 
-
 #endif // TRAINTESTSPLIT_H

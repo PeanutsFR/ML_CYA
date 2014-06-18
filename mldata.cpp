@@ -53,43 +53,48 @@ const cv::Mat* MLData::get_responses(void) {
 //set_train_test_split
 void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 
-    train_sample = new cv::Mat(spl->train_sample_part.count, valeurs->cols, CV_32FC1);
-    test_sample = new cv::Mat(valeurs->rows - spl->train_sample_part.count, valeurs->cols, CV_32FC1);
+    int train_count = spl->train_sample_part.count;
+
+    train_sample = new cv::Mat(train_count, valeurs->cols, CV_32FC1);
+    test_sample = new cv::Mat((valeurs->rows - train_count), valeurs->cols, CV_32FC1);
 
 	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
 	if (spl->mix == true) {
 
 		// traitement du train_sample
-		std::vector<int> seeds_train;
-        for (int i=0; i < spl->train_sample_part.count; ++i)
-			seeds_train.push_back(i);
-		cv::randShuffle(seeds_train);
+        std::vector<int> seeds;
+        for (int i=0; i < valeurs->rows; ++i)
+            seeds.push_back(i);
+        cv::randShuffle(seeds);
 
-        for (int i=0; i < spl->train_sample_part.count; ++i)
-			train_sample->row(i) = valeurs->row(seeds_train[i]);
+        for (int i=0; i < train_count; ++i)
+            train_sample->row(i) = valeurs->row(seeds[i]);
 
-		// traitement du test_sample
-		std::vector<int> seeds_test;
-        for (int i=spl->train_sample_part.count; i < valeurs->rows; ++i)
-			seeds_test.push_back(i);
-		cv::randShuffle(seeds_test);
-
-        for (int i=0; i < valeurs->rows - spl->train_sample_part.count; ++i)
-			test_sample->row(i) = valeurs->row(seeds_test[i]);
+        for (int i=train_count; i < valeurs->rows; ++i)
+            test_sample->row(i - train_count) = valeurs->row(seeds[i]);
 		
 	// sinon, remplir sans mélanger
 	} else { 
 
 		for (int i=0; i < valeurs->rows; ++i) {
-                if (i < spl->train_sample_part.count)
+                if (i < train_count)
 					train_sample->row(i) = valeurs->row(i);
 				else
 					test_sample->row(i) = valeurs->row(i);
-			}
+        }
 			
-		}
+    }
 }
 
+//get_train_sample
+const cv::Mat* MLData::get_train_sample_idx(void) {
+    return train_sample;
+}
+
+//get_test_sample_idx
+const cv::Mat* MLData::get_test_sample_idx(void) {
+    return test_sample;
+}
 
 
 int MLData::read_csv(QString filepath){
@@ -109,7 +114,9 @@ int MLData::read_csv(QString filepath){
         nbLignes++;
         //Bstd::cout << ligne.toStdString() << std::endl;
         l2 = ligne.split('\n',QString::SkipEmptyParts);
-        l = l2.at(0).split(separator,QString::SkipEmptyParts);
+
+        if (!l2.isEmpty())
+            l = l2.at(0).split(separator,QString::SkipEmptyParts);
 
 
         if(nbLignes == 1)
