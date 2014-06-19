@@ -53,7 +53,13 @@ const cv::Mat* MLData::get_responses(void) {
 //set_train_test_split
 void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 
-    int train_count = spl->train_sample_part.count;
+    int train_count = 0;
+
+    if (spl->train_sample_part_mode == 0) {
+        train_count = spl->train_sample_part.count;
+    } else {
+        train_count = (spl->train_sample_part.portion)*valeurs->rows;
+    }
 
     std::cout << "TRAIN_SAMPLE_PART.COUNT = " << train_count << std::endl;
     std::cout << "MIX = " << spl->mix << std::endl;
@@ -64,6 +70,8 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
 	if (spl->mix == true) {
 
+        std::cout << "MIX = TRUE" << std::endl;
+
 		// traitement du train_sample
         std::vector<int> seeds;
         for (int i=0; i < valeurs->rows; ++i)
@@ -71,19 +79,21 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
         cv::randShuffle(seeds);
 
         for (int i=0; i < train_count; ++i)
-            train_sample->row(i) = valeurs->row(seeds[i]);
+            (valeurs->row(seeds[i])).copyTo(train_sample->row(i));
 
         for (int i=train_count; i < valeurs->rows; ++i)
-            test_sample->row(i - train_count) = valeurs->row(seeds[i]);
+            (valeurs->row(seeds[i])).copyTo(test_sample->row(i - train_count));
 		
 	// sinon, remplir sans mélanger
-	} else { 
+    } else {
+
+        std::cout << "MIX = FALSE" << std::endl;
 
 		for (int i=0; i < valeurs->rows; ++i) {
                 if (i < train_count)
-					train_sample->row(i) = valeurs->row(i);
+                    (valeurs->row(i)).copyTo(train_sample->row(i)) ;
 				else
-					test_sample->row(i) = valeurs->row(i);
+                    (valeurs->row(i)).copyTo(test_sample->row(i - train_count));
         }
 			
     }
