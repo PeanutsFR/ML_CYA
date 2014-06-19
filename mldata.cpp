@@ -61,16 +61,11 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
         train_count = (spl->train_sample_part.portion)*valeurs->rows;
     }
 
-    std::cout << "TRAIN_SAMPLE_PART.COUNT = " << train_count << std::endl;
-    std::cout << "MIX = " << spl->mix << std::endl;
-
     train_sample = new cv::Mat(train_count, valeurs->cols, CV_32FC1);
     test_sample = new cv::Mat((valeurs->rows - train_count), valeurs->cols, CV_32FC1);
 
 	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
-	if (spl->mix == true) {
-
-        std::cout << "MIX = TRUE" << std::endl;
+    if (spl->mix == true) {
 
 		// traitement du train_sample
         std::vector<int> seeds;
@@ -86,8 +81,6 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 		
 	// sinon, remplir sans mélanger
     } else {
-
-        std::cout << "MIX = FALSE" << std::endl;
 
 		for (int i=0; i < valeurs->rows; ++i) {
                 if (i < train_count)
@@ -181,7 +174,7 @@ int MLData::read_csv(QString filepath){
 
     std::cout << std::endl << " Matrice : " << nb_lignes << " x " << nb_col << std::endl;
     std::cout << std::endl << "Celle-ci contient " << liste_classes.size() << " classes : " << std::endl;
-    std::cout << *valeurs << std::endl;
+    //std::cout << *valeurs << std::endl;
 
     std::map<std::string,int>::iterator it = correspondances.begin();
     for(int j=0;j<liste_classes.size();j++){

@@ -206,22 +206,24 @@ void MainWindow::test(QString fichier){
     MLData data;
     data.read_csv(fichier);
     data.set_response_idx(0);
+
     //const cv::Mat* values = data.get_values();
     //const cv::Mat* responses = data.get_responses();
 
     //std::cout << *values << std::endl;
     //std::cout << *responses << std::endl;
 
-    float portion = 0.66666;
-    struct TrainTestSplit spl(portion, true);
+    struct TrainTestSplit spl(0.8, true);
 
     data.set_train_test_split(&spl);
 
-    std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << std::endl;
-    std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
+    std::cout << "--- TRAIN SAMPLE --- " << std::endl;
+    std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << "\n" << std::endl;
+    //std::cout << *(data.get_train_sample_idx()) << std::endl;
 
-    std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
-    std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
+    std::cout << "--- TEST SAMPLE --- " << std::endl;
+    std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << "\n" << std::endl;
+    //std::cout << *(data.get_test_sample_idx()) << std::endl;
 
 
     //Ouverture et chargement du fichier

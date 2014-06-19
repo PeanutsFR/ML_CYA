@@ -6,7 +6,8 @@ struct TrainTestSplit
 {
     TrainTestSplit();
     TrainTestSplit( int train_sample_count, bool mix = true);
-    TrainTestSplit( float train_sample_portion, bool mix = true);
+    TrainTestSplit(float train_sample_portion, bool mix = true);
+    TrainTestSplit( double train_sample_portion, bool mix = true);
 
     union
     {
