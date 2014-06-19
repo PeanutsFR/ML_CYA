@@ -212,14 +212,17 @@ void MainWindow::test(QString fichier){
     //std::cout << *values << std::endl;
     //std::cout << *responses << std::endl;
 
-    struct TrainTestSplit spl(80, true);
+    float portion = 0.66666;
+    struct TrainTestSplit spl(portion, true);
 
     data.set_train_test_split(&spl);
 
+    std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << std::endl;
+    std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
 
+    std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
+    std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
 
-     std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
-     std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
 
     //Ouverture et chargement du fichier
     //CvMLData data;
