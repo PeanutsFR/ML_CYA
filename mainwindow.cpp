@@ -130,6 +130,7 @@ void MainWindow::on_btn_chgCam_clicked(){
 
 void MainWindow::on_btn_anim_clicked(){
     //ardrone.setAnimation(ui->txt_anim->text().toInt());
+    ardrone.setAnimation(ui->txt_anim->text().toInt());
 }
 
 void MainWindow::on_btn_parcourir_clicked(){
@@ -215,8 +216,10 @@ void MainWindow::test(QString fichier){
 
     data.set_train_test_split(&spl);
 
-    std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
-    std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
+
+
+     std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
+     std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
 
     //Ouverture et chargement du fichier
     //CvMLData data;

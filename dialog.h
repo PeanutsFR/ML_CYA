@@ -2,7 +2,22 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QTimer>
 #include "ardrone/ardrone.h"
+
+#define COMMAND_NOTHING 0
+#define COMMAND_TAKE_OFF 1
+#define COMMAND_LAND 2
+#define COMMAND_LIFT 3
+#define COMMAND_GO_DOWN 4
+#define COMMAND_FORWARD 5
+#define COMMAND_BACKWARD 6
+#define COMMAND_STRAFE_LEFT 7
+#define COMMAND_STRAFE_RIGHT 8
+#define COMMAND_ROTATE_LEFT 9
+#define COMMAND_ROTATE_RIGHT 10
+#define COMMAND_CONFIG_TRIMM 11
+#define COMMAND_CONFIG_MAGNETO 12
 
 namespace Ui {
 class Dialog;
@@ -16,11 +31,16 @@ public:
     explicit Dialog(ARDrone *ardrone, QWidget *parent = 0);
     ~Dialog();
 
+public slots:
+    void send_commands();
+
 private:
     Ui::Dialog *ui;
     ARDrone *drone;
+    QTimer *commands;
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+    int command;
 };
 
 #endif // DIALOG_H
