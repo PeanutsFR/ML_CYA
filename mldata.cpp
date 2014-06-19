@@ -55,6 +55,9 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
 
     int train_count = spl->train_sample_part.count;
 
+    std::cout << "TRAIN_SAMPLE_PART.COUNT = " << train_count << std::endl;
+    std::cout << "MIX = " << spl->mix << std::endl;
+
     train_sample = new cv::Mat(train_count, valeurs->cols, CV_32FC1);
     test_sample = new cv::Mat((valeurs->rows - train_count), valeurs->cols, CV_32FC1);
 
