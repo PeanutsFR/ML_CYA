@@ -361,24 +361,6 @@
              </property>
             </widget>
            </item>
-<<<<<<< HEAD
-           <item row="3" column="0" colspan="4">
-            <widget class="QPushButton" name="btn_load">
-             <property name="text">
-              <string>Charger le fichier</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Choix de l'Algorithme :</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QPushButton" name="btn_parcourir">
-=======
            <item row="1" column="2">
             <widget class="QPushButton" name="btn_creer">
              <property name="text">
@@ -388,7 +370,6 @@
            </item>
            <item row="3" column="0" colspan="3">
             <widget class="QPushButton" name="btn_load">
->>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
              <property name="text">
               <string>Parcourir</string>
              </property>
@@ -419,35 +400,18 @@
         </item>
         <item row="1" column="0">
          <widget class="QTabWidget" name="tabWidget_3">
-<<<<<<< HEAD
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <property name="documentMode">
-           <bool>false</bool>
-          </property>
-=======
->>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
           <property name="tabsClosable">
            <bool>true</bool>
           </property>
           <property name="movable">
            <bool>true</bool>
           </property>
-<<<<<<< HEAD
-          <widget class="QWidget" name="tab_14">
-=======
           <widget class="QWidget" name="tab">
->>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
            <attribute name="title">
             <string>Tab 1</string>
            </attribute>
           </widget>
-<<<<<<< HEAD
-          <widget class="QWidget" name="tab_15">
-=======
           <widget class="QWidget" name="tab_2">
->>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
            <attribute name="title">
             <string>Tab 2</string>
            </attribute>
