@@ -13,9 +13,15 @@ MAKEFILE      = Makefile
 CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+<<<<<<< HEAD
 CFLAGS        = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 INCPATH       = -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I. -I-D__STDC_CONSTANT_MACROS -I\usr\local\include -I\home\bouazime\Documents\stage_drone_cmi\ml_cya_git -I\usr\include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I.
+=======
+CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
+CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
+INCPATH       = -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I. -I-D__STDC_CONSTANT_MACROS -I\usr\local\include -I-I.\ -IINCLUDEPATH -I+= -I\usr\include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I.
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -L\usr\local\lib -lavcodec -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_objdetect -lopencv_ocl -lopencv_video -lopencv_videostab -lm -lavutil -lavformat -lswscale -lQt5Widgets -L/usr/lib/x86_64-linux-gnu -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -1179,6 +1185,22 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtGui/qinputmethod.h \
 		/usr/include/qt5/QtWidgets/QButtonGroup \
 		/usr/include/qt5/QtWidgets/qbuttongroup.h \
+<<<<<<< HEAD
+=======
+		/usr/include/qt5/QtWidgets/QComboBox \
+		/usr/include/qt5/QtWidgets/qcombobox.h \
+		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
+		/usr/include/qt5/QtWidgets/qstyleoption.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
+		/usr/include/qt5/QtWidgets/qstyle.h \
+		/usr/include/qt5/QtWidgets/qtabbar.h \
+		/usr/include/qt5/QtWidgets/qrubberband.h \
+		/usr/include/qt5/QtCore/qabstractitemmodel.h \
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 		/usr/include/qt5/QtWidgets/QFrame \
 		/usr/include/qt5/QtWidgets/QGridLayout \
 		/usr/include/qt5/QtWidgets/qgridlayout.h \
@@ -1190,6 +1212,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/qheaderview.h \
 		/usr/include/qt5/QtWidgets/qabstractitemview.h \
 		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+<<<<<<< HEAD
 		/usr/include/qt5/QtCore/qabstractitemmodel.h \
 		/usr/include/qt5/QtCore/qitemselectionmodel.h \
 		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
@@ -1202,6 +1225,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/qstyle.h \
 		/usr/include/qt5/QtWidgets/qtabbar.h \
 		/usr/include/qt5/QtWidgets/qrubberband.h \
+=======
+		/usr/include/qt5/QtCore/qitemselectionmodel.h \
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 		/usr/include/qt5/QtWidgets/QLCDNumber \
 		/usr/include/qt5/QtWidgets/qlcdnumber.h \
 		/usr/include/qt5/QtCore/qbitarray.h \
@@ -1215,6 +1241,7 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/qmenu.h \
 		/usr/include/qt5/QtWidgets/QMenuBar \
 		/usr/include/qt5/QtWidgets/qmenubar.h \
+<<<<<<< HEAD
 		/usr/include/qt5/QtWidgets/QPlainTextEdit \
 		/usr/include/qt5/QtWidgets/qplaintextedit.h \
 		/usr/include/qt5/QtWidgets/qtextedit.h \
@@ -1224,6 +1251,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtGui/qglyphrun.h \
 		/usr/include/qt5/QtGui/qrawfont.h \
 		/usr/include/qt5/QtGui/qfontdatabase.h \
+=======
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 		/usr/include/qt5/QtWidgets/QProgressBar \
 		/usr/include/qt5/QtWidgets/qprogressbar.h \
 		/usr/include/qt5/QtWidgets/QPushButton \

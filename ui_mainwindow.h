@@ -88,6 +88,7 @@ public:
     QGridLayout *gridLayout_4;
     QFrame *frame_5;
     QGridLayout *gridLayout_5;
+<<<<<<< HEAD
     QLineEdit *txt_path;
     QComboBox *comboBox;
     QPushButton *pushButton;
@@ -98,6 +99,18 @@ public:
     QTabWidget *tabWidget_3;
     QWidget *tab_14;
     QWidget *tab_15;
+=======
+    QLabel *label_7;
+    QPushButton *btn_creer;
+    QPushButton *btn_load;
+    QLineEdit *txt_path;
+    QLabel *label_8;
+    QPushButton *btn_parcourir;
+    QComboBox *comboBox;
+    QTabWidget *tabWidget_3;
+    QWidget *tab;
+    QWidget *tab_2;
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
     QMenuBar *menuBar;
     QMenu *menuBar_2;
     QMenu *menuEdit;
@@ -352,16 +365,44 @@ public:
         gridLayout_5->setSpacing(6);
         gridLayout_5->setContentsMargins(11, 11, 11, 11);
         gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
+<<<<<<< HEAD
         txt_path = new QLineEdit(frame_5);
         txt_path->setObjectName(QStringLiteral("txt_path"));
 
         gridLayout_5->addWidget(txt_path, 2, 2, 1, 1);
+=======
+        label_7 = new QLabel(frame_5);
+        label_7->setObjectName(QStringLiteral("label_7"));
+
+        gridLayout_5->addWidget(label_7, 1, 0, 1, 1);
+
+        btn_creer = new QPushButton(frame_5);
+        btn_creer->setObjectName(QStringLiteral("btn_creer"));
+
+        gridLayout_5->addWidget(btn_creer, 1, 2, 1, 1);
+
+        btn_load = new QPushButton(frame_5);
+        btn_load->setObjectName(QStringLiteral("btn_load"));
+
+        gridLayout_5->addWidget(btn_load, 3, 0, 1, 3);
+
+        txt_path = new QLineEdit(frame_5);
+        txt_path->setObjectName(QStringLiteral("txt_path"));
+
+        gridLayout_5->addWidget(txt_path, 2, 1, 1, 1);
+
+        label_8 = new QLabel(frame_5);
+        label_8->setObjectName(QStringLiteral("label_8"));
+
+        gridLayout_5->addWidget(label_8, 2, 0, 1, 1);
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 
         comboBox = new QComboBox(frame_5);
         comboBox->setObjectName(QStringLiteral("comboBox"));
 
         gridLayout_5->addWidget(comboBox, 1, 2, 1, 1);
 
+<<<<<<< HEAD
         pushButton = new QPushButton(frame_5);
         pushButton->setObjectName(QStringLiteral("pushButton"));
 
@@ -371,10 +412,14 @@ public:
         label_7->setObjectName(QStringLiteral("label_7"));
 
         gridLayout_5->addWidget(label_7, 2, 0, 1, 1);
+=======
+        gridLayout_5->addWidget(btn_parcourir, 2, 2, 1, 1);
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 
-        btn_load = new QPushButton(frame_5);
-        btn_load->setObjectName(QStringLiteral("btn_load"));
+        comboBox = new QComboBox(frame_5);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
 
+<<<<<<< HEAD
         gridLayout_5->addWidget(btn_load, 3, 0, 1, 4);
 
         label_8 = new QLabel(frame_5);
@@ -386,12 +431,16 @@ public:
         btn_parcourir->setObjectName(QStringLiteral("btn_parcourir"));
 
         gridLayout_5->addWidget(btn_parcourir, 2, 3, 1, 1);
+=======
+        gridLayout_5->addWidget(comboBox, 1, 1, 1, 1);
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 
 
         gridLayout_4->addWidget(frame_5, 0, 0, 1, 2);
 
         tabWidget_3 = new QTabWidget(tab_5);
         tabWidget_3->setObjectName(QStringLiteral("tabWidget_3"));
+<<<<<<< HEAD
         tabWidget_3->setDocumentMode(false);
         tabWidget_3->setTabsClosable(true);
         tabWidget_3->setMovable(true);
@@ -401,6 +450,16 @@ public:
         tab_15 = new QWidget();
         tab_15->setObjectName(QStringLiteral("tab_15"));
         tabWidget_3->addTab(tab_15, QString());
+=======
+        tabWidget_3->setTabsClosable(true);
+        tabWidget_3->setMovable(true);
+        tab = new QWidget();
+        tab->setObjectName(QStringLiteral("tab"));
+        tabWidget_3->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QStringLiteral("tab_2"));
+        tabWidget_3->addTab(tab_2, QString());
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
 
         gridLayout_4->addWidget(tabWidget_3, 1, 0, 1, 1);
 
@@ -476,6 +535,7 @@ public:
         btn_drone_connect->setText(QApplication::translate("MainWindow", "Connect to the Drone", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "Drone controls", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("MainWindow", "Algorithms", 0));
+<<<<<<< HEAD
         pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
         label_7->setText(QApplication::translate("MainWindow", "Chemin du fichier : ", 0));
         btn_load->setText(QApplication::translate("MainWindow", "Charger le fichier", 0));
@@ -483,6 +543,15 @@ public:
         btn_parcourir->setText(QApplication::translate("MainWindow", "Parcourir", 0));
         tabWidget_3->setTabText(tabWidget_3->indexOf(tab_14), QApplication::translate("MainWindow", "Tab 1", 0));
         tabWidget_3->setTabText(tabWidget_3->indexOf(tab_15), QApplication::translate("MainWindow", "Tab 2", 0));
+=======
+        label_7->setText(QApplication::translate("MainWindow", "Choix de l'Algorithme :", 0));
+        btn_creer->setText(QApplication::translate("MainWindow", "Creer", 0));
+        btn_load->setText(QApplication::translate("MainWindow", "Ouvrir le fichier", 0));
+        label_8->setText(QApplication::translate("MainWindow", "Donn\303\251es :", 0));
+        btn_parcourir->setText(QApplication::translate("MainWindow", "Parcourir", 0));
+        tabWidget_3->setTabText(tabWidget_3->indexOf(tab), QApplication::translate("MainWindow", "Tab 1", 0));
+        tabWidget_3->setTabText(tabWidget_3->indexOf(tab_2), QApplication::translate("MainWindow", "Tab 2", 0));
+>>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
         tabWidget->setTabText(tabWidget->indexOf(tab_5), QApplication::translate("MainWindow", "Learning", 0));
         menuBar_2->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
