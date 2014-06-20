@@ -204,15 +204,18 @@ void MainWindow::updateGUI(){
 void MainWindow::test(QString fichier){
 
     MLData data;
-    data.read_csv(fichier);
+
     data.set_response_idx(data.get_values()->cols -1);
+    data.set_delimiter(',');
+    data.read_csv(fichier);
 
     struct TrainTestSplit spl(100, true);
 
     data.set_train_test_split(&spl);
 
-    std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << std::endl;
-    std::cout << "--- TRAIN SAMPLE --- \n" << *(data.get_train_sample_idx()) << std::endl;
+    std::cout << "--- TRAIN SAMPLE --- " << std::endl;
+    std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << "\n" << std::endl;
+    //std::cout << *(data.get_train_sample_idx()) << std::endl;
 
     std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
     std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;

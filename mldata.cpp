@@ -206,7 +206,7 @@ int MLData::read_csv(QString filepath){
 
     std::cout << std::endl << " Matrice : " << nb_lignes << " x " << nb_col << std::endl;
     std::cout << std::endl << "Celle-ci contient " << liste_classes.size() << " classes : " << std::endl;
-    std::cout << *valeurs << std::endl;
+    //std::cout << *valeurs << std::endl;
 
     std::map<std::string,int>::iterator it = correspondances.begin();
     for(int j=0;j<liste_classes.size();j++){
