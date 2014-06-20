@@ -5,7 +5,7 @@
 #include <QTimer>
 #include "ardrone/ardrone.h"
 
-#define COMMAND_NOTHING 0
+#define COMMAND_NOTHING_V1 0
 #define COMMAND_TAKE_OFF 1
 #define COMMAND_LAND 2
 #define COMMAND_LIFT 3
@@ -18,6 +18,9 @@
 #define COMMAND_ROTATE_RIGHT 10
 #define COMMAND_CONFIG_TRIMM 11
 #define COMMAND_CONFIG_MAGNETO 12
+#define COMMAND_NOTHING_V2 13
+#define COMMAND_NOTHING_V3 14
+#define COMMAND_NOTHING_V4 15
 
 namespace Ui {
 class Dialog;

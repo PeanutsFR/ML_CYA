@@ -204,16 +204,12 @@ void MainWindow::updateGUI(){
 void MainWindow::test(QString fichier){
 
     MLData data;
+
+    data.set_delimiter(',');
     data.read_csv(fichier);
-    data.set_response_idx(0);
+    data.set_response_idx(data.get_values()->cols -1);
 
-    //const cv::Mat* values = data.get_values();
-    //const cv::Mat* responses = data.get_responses();
-
-    //std::cout << *values << std::endl;
-    //std::cout << *responses << std::endl;
-
-    struct TrainTestSplit spl(0.666666667, true);
+    struct TrainTestSplit spl(100, true);
 
     data.set_train_test_split(&spl);
 
@@ -221,69 +217,17 @@ void MainWindow::test(QString fichier){
     std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << "\n" << std::endl;
     //std::cout << *(data.get_train_sample_idx()) << std::endl;
 
-    std::cout << "--- TEST SAMPLE --- " << std::endl;
-    std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << "\n" << std::endl;
-    //std::cout << *(data.get_test_sample_idx()) << std::endl;
 
+    std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
+    std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
+    std::cout << "Variables idx : " << *(data.get_var_idx()) << std::endl;
 
-    const cv::Mat* mat_iris = data.get_values();
+    //Intialisation
+    const cv::Mat* samples = data.get_values(); // samples
     const cv::Mat* responses = data.get_responses();
-
-
-    // ----- PARAMS -----
-    CvSVMParams params;
-    params.svm_type    = CvSVM::C_SVC;    params.kernel_type = CvSVM::LINEAR;
-    params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, 100, 1e-6);
-
-    // ----- TRAIN -----
-    CvSVM SVM;
-    //SVM.train(data.get_train_sample_idx(), responses, cv::Mat(), cv::Mat(), params);
-    const cv::Mat* train_sample_mat = data.get_train_sample_idx();
-    SVM.train(*train_sample_mat, *responses, cv::Mat(), cv::Mat(), params);
-
-
-
-    cv::Mat predicted(data.get_test_sample_idx()->rows,1, CV_32F);
-    for(int i = 0; i < (data.get_test_sample_idx())->rows; i++) {
-        cv::Mat sample = (data.get_test_sample_idx())->row(i);
-        predicted.at<float>(i,0)= SVM.predict(sample);
-        float p = predicted.at<float>(i,0);
-
-        std::cout << "float p = " << p << std::endl;
-        if (p == 1) {
-            std::cout << "Iris-setosa" << std::endl;
-        } else if (p == 2) {
-            std::cout << "Iris-versicolor" << std::endl;
-        } else if (p == 3) {
-            std::cout << "Iris-virginica" << std::endl;
-        }
-    }
-
-
-//Ouverture et chargement du fichier
-//CvMLData data;
-//data.read_csv("/home/emip/Drone/Drone/data/iris/iris.data");
-//cv::Mat m = data.get_values();
-//cv::Mat m;
-//data.set_response_idx(4);
-//m = data.get_values();
-//std::cout << "Matrice = " << m << std::endl;
-
-//Intialisation
-//cv::Mat train_sample,test_sample,samples,responses,vars;
-//samples = cv::Mat(data.get_values(),true); //samples
-//data.set_response_idx(4);
-/*
-    std::map<std::string,int> results = data.get_class_labels_map();
-    CvTrainTestSplit spl(100,true);
-    data.set_train_test_split(&spl);
-
-    //Matrices
-
-    responses = cv::Mat(data.get_responses(),true);
-    train_sample = data.get_train_sample_idx();
-    test_sample = data.get_test_sample_idx();
-    vars = data.get_var_idx();
+    const cv::Mat* train_sample = data.get_train_sample_idx();
+    const cv::Mat* test_sample = data.get_test_sample_idx();
+    const cv::Mat* vars = data.get_var_idx();
 
     //Classifier params
     CvSVMParams params;
@@ -295,47 +239,15 @@ void MainWindow::test(QString fichier){
     CvSVM svm;
 
     //Training
-    svm.train(samples,responses,vars,train_sample,params);
+    svm.train(*samples,*responses,*vars,*train_sample,params);
 
-    //Predict
-
-
-    //svm.predict()
-
-
-            //std::vector<float> e1, e2;
-            // float f1 = bayes.calc_error(data,CV_TRAIN_ERROR,&e1); // train
-            // float f2 = bayes.calc_error(data,CV_TEST_ERROR,&e2);//test
-
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-setosa"]));
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-versicolor"]));
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-virginica"]));
-
-    ui->rtf_edit->appendPlainText(QString::number(samples.rows));
-    ui->rtf_edit->appendPlainText(QString::number(samples.cols));
-    ui->rtf_edit->appendPlainText(QString::number(responses.rows));
-    ui->rtf_edit->appendPlainText(QString::number(responses.cols));
-    ui->rtf_edit->appendPlainText(QString::number(test_sample.size().width) + tr("x") + QString::number(test_sample.size().height) + tr(" : ensemble de test"));
-    ui->rtf_edit->appendPlainText(QString::number(vars.cols));
-    ui->rtf_edit->appendPlainText(QString::number(responses.at<float>(1,0)));
-
-    double* Mi;
-    QString ligne("");
-    QString res;
-    for(int i=0;i<test_sample.cols;i++){
-        ligne = QString::number(test_sample.at<int>(0,i)) + tr(" :");
-        samples.ptr<double>(test_sample.at<int>(0,i));
-        for(int j=0;j<vars.cols;j++){
-            res.setNum(Mi[j],'f');
-            ligne = ligne + tr(" ") + res;
-        }
-        ui->rtf_edit->appendPlainText(ligne);
+    cv::Mat predicted(test_sample->rows,1,CV_32FC1);
+    for(int i=0;i<predicted.rows;i++){
+        cv::Mat sample = samples->row(test_sample->at<int>(i,0));
+        predicted.at<float>(i,0) = svm.predict(sample);
     }
 
-
-    // ui->rtf_edit->appendPlainText(QString::number(f1) + tr(" % erreur en apprentissage"));
-    // ui->rtf_edit->appendPlainText(QString::number(f2) + tr(" % erreur en test"));
-*/
+    std::cout << "Predictions : " << predicted << std::endl;
 
 }
 
