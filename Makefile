@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I. -I-D__STDC_CONSTANT_MACROS -I\usr\local\include -I\home\emip\git_drone -I\usr\include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I.
+INCPATH       = -I/usr/lib/i386-linux-gnu/qt5/mkspecs/linux-g++ -I. -I-D__STDC_CONSTANT_MACROS -I\usr\local\include -I-I.\ -IINCLUDEPATH -I+= -I\usr\include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I. -I.
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L\usr\local\lib -lavcodec -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_objdetect -lopencv_ocl -lopencv_video -lopencv_videostab -lm -lavutil -lavformat -lswscale -lQt5Widgets -L/usr/lib/i386-linux-gnu -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -655,6 +655,9 @@ moc_dialog.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtCore/QTimer \
+		/usr/include/qt5/QtCore/qtimer.h \
+		/usr/include/qt5/QtCore/qbasictimer.h \
 		ardrone/ardrone.h \
 		/usr/include/math.h \
 		/usr/local/include/opencv2/opencv.hpp \
@@ -1163,6 +1166,69 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtWidgets/qdialog.h \
 		ui_mainwindow.h \
+		/usr/include/qt5/QtCore/QVariant \
+		/usr/include/qt5/QtWidgets/QAction \
+		/usr/include/qt5/QtWidgets/qaction.h \
+		/usr/include/qt5/QtWidgets/qactiongroup.h \
+		/usr/include/qt5/QtWidgets/QApplication \
+		/usr/include/qt5/QtWidgets/qapplication.h \
+		/usr/include/qt5/QtCore/qcoreapplication.h \
+		/usr/include/qt5/QtCore/qeventloop.h \
+		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
+		/usr/include/qt5/QtGui/qguiapplication.h \
+		/usr/include/qt5/QtGui/qinputmethod.h \
+		/usr/include/qt5/QtWidgets/QButtonGroup \
+		/usr/include/qt5/QtWidgets/qbuttongroup.h \
+		/usr/include/qt5/QtWidgets/QComboBox \
+		/usr/include/qt5/QtWidgets/qcombobox.h \
+		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
+		/usr/include/qt5/QtWidgets/qstyleoption.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
+		/usr/include/qt5/QtWidgets/qstyle.h \
+		/usr/include/qt5/QtWidgets/qtabbar.h \
+		/usr/include/qt5/QtWidgets/qrubberband.h \
+		/usr/include/qt5/QtCore/qabstractitemmodel.h \
+		/usr/include/qt5/QtWidgets/QFrame \
+		/usr/include/qt5/QtWidgets/QGridLayout \
+		/usr/include/qt5/QtWidgets/qgridlayout.h \
+		/usr/include/qt5/QtWidgets/qlayout.h \
+		/usr/include/qt5/QtWidgets/qlayoutitem.h \
+		/usr/include/qt5/QtWidgets/qboxlayout.h \
+		/usr/include/qt5/QtWidgets/QHBoxLayout \
+		/usr/include/qt5/QtWidgets/QHeaderView \
+		/usr/include/qt5/QtWidgets/qheaderview.h \
+		/usr/include/qt5/QtWidgets/qabstractitemview.h \
+		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+		/usr/include/qt5/QtCore/qitemselectionmodel.h \
+		/usr/include/qt5/QtWidgets/QLCDNumber \
+		/usr/include/qt5/QtWidgets/qlcdnumber.h \
+		/usr/include/qt5/QtCore/qbitarray.h \
+		/usr/include/qt5/QtWidgets/QLineEdit \
+		/usr/include/qt5/QtWidgets/qlineedit.h \
+		/usr/include/qt5/QtGui/qtextcursor.h \
+		/usr/include/qt5/QtGui/qtextformat.h \
+		/usr/include/qt5/QtGui/qpen.h \
+		/usr/include/qt5/QtGui/qtextoption.h \
+		/usr/include/qt5/QtWidgets/QMenu \
+		/usr/include/qt5/QtWidgets/qmenu.h \
+		/usr/include/qt5/QtWidgets/QMenuBar \
+		/usr/include/qt5/QtWidgets/qmenubar.h \
+		/usr/include/qt5/QtWidgets/QProgressBar \
+		/usr/include/qt5/QtWidgets/qprogressbar.h \
+		/usr/include/qt5/QtWidgets/QPushButton \
+		/usr/include/qt5/QtWidgets/qpushbutton.h \
+		/usr/include/qt5/QtWidgets/qabstractbutton.h \
+		/usr/include/qt5/QtWidgets/QSpinBox \
+		/usr/include/qt5/QtWidgets/qspinbox.h \
+		/usr/include/qt5/QtWidgets/QStatusBar \
+		/usr/include/qt5/QtWidgets/qstatusbar.h \
+		/usr/include/qt5/QtWidgets/QTabWidget \
+		/usr/include/qt5/QtWidgets/QVBoxLayout \
+		/usr/include/qt5/QtWidgets/QWidget \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -1972,6 +2038,9 @@ dialog.o: dialog.cpp dialog.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/include/qt5/QtCore/QTimer \
+		/usr/include/qt5/QtCore/qtimer.h \
+		/usr/include/qt5/QtCore/qbasictimer.h \
 		ardrone/ardrone.h \
 		/usr/include/math.h \
 		/usr/local/include/opencv2/opencv.hpp \
@@ -2039,6 +2108,41 @@ dialog.o: dialog.cpp dialog.h \
 		/usr/include/arpa/inet.h \
 		/usr/include/unistd.h \
 		ui_dialog.h \
+		/usr/include/qt5/QtCore/QVariant \
+		/usr/include/qt5/QtWidgets/QAction \
+		/usr/include/qt5/QtWidgets/qaction.h \
+		/usr/include/qt5/QtGui/qicon.h \
+		/usr/include/qt5/QtWidgets/qactiongroup.h \
+		/usr/include/qt5/QtWidgets/QApplication \
+		/usr/include/qt5/QtWidgets/qapplication.h \
+		/usr/include/qt5/QtCore/qcoreapplication.h \
+		/usr/include/qt5/QtCore/qeventloop.h \
+		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
+		/usr/include/qt5/QtGui/qguiapplication.h \
+		/usr/include/qt5/QtGui/qinputmethod.h \
+		/usr/include/qt5/QtWidgets/QButtonGroup \
+		/usr/include/qt5/QtWidgets/qbuttongroup.h \
+		/usr/include/qt5/QtWidgets/QHeaderView \
+		/usr/include/qt5/QtWidgets/qheaderview.h \
+		/usr/include/qt5/QtWidgets/qabstractitemview.h \
+		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
+		/usr/include/qt5/QtWidgets/qframe.h \
+		/usr/include/qt5/QtCore/qabstractitemmodel.h \
+		/usr/include/qt5/QtCore/qitemselectionmodel.h \
+		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
+		/usr/include/qt5/QtWidgets/qstyleoption.h \
+		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
+		/usr/include/qt5/QtWidgets/qslider.h \
+		/usr/include/qt5/QtWidgets/qabstractslider.h \
+		/usr/include/qt5/QtWidgets/qstyle.h \
+		/usr/include/qt5/QtWidgets/qtabbar.h \
+		/usr/include/qt5/QtWidgets/qtabwidget.h \
+		/usr/include/qt5/QtWidgets/qrubberband.h \
+		/usr/include/qt5/QtWidgets/QPushButton \
+		/usr/include/qt5/QtWidgets/qpushbutton.h \
+		/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		/usr/include/qt5/QtGui/QKeyEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dialog.o dialog.cpp
 
@@ -2627,7 +2731,94 @@ mldata.o: mldata.cpp mldata.h \
 		/usr/include/boost/range/detail/safe_bool.hpp \
 		/usr/include/boost/container/container_fwd.hpp \
 		/usr/include/boost/integer.hpp \
-		/usr/include/boost/integer_fwd.hpp
+		/usr/include/boost/integer_fwd.hpp \
+		/usr/include/boost/algorithm/string.hpp \
+		/usr/include/boost/algorithm/string/std_containers_traits.hpp \
+		/usr/include/boost/algorithm/string/std/string_traits.hpp \
+		/usr/include/boost/algorithm/string/yes_no_type.hpp \
+		/usr/include/boost/algorithm/string/sequence_traits.hpp \
+		/usr/include/boost/algorithm/string/std/list_traits.hpp \
+		/usr/include/boost/algorithm/string/std/slist_traits.hpp \
+		/usr/include/boost/algorithm/string/config.hpp \
+		/usr/include/boost/algorithm/string/trim.hpp \
+		/usr/include/boost/range/as_literal.hpp \
+		/usr/include/boost/range/detail/as_literal.hpp \
+		/usr/include/boost/range/detail/detail_str.hpp \
+		/usr/include/boost/range/detail/value_type.hpp \
+		/usr/include/boost/range/iterator_range.hpp \
+		/usr/include/boost/range/iterator_range_io.hpp \
+		/usr/include/boost/range/detail/str_types.hpp \
+		/usr/include/boost/algorithm/string/detail/trim.hpp \
+		/usr/include/boost/algorithm/string/classification.hpp \
+		/usr/include/boost/algorithm/string/detail/classification.hpp \
+		/usr/include/boost/algorithm/string/predicate_facade.hpp \
+		/usr/include/boost/algorithm/string/case_conv.hpp \
+		/usr/include/boost/iterator/transform_iterator.hpp \
+		/usr/include/boost/type_traits/function_traits.hpp \
+		/usr/include/boost/utility/result_of.hpp \
+		/usr/include/boost/utility/declval.hpp \
+		/usr/include/boost/algorithm/string/detail/case_conv.hpp \
+		/usr/include/boost/algorithm/string/predicate.hpp \
+		/usr/include/boost/algorithm/string/compare.hpp \
+		/usr/include/boost/algorithm/string/find.hpp \
+		/usr/include/boost/algorithm/string/finder.hpp \
+		/usr/include/boost/algorithm/string/constants.hpp \
+		/usr/include/boost/algorithm/string/detail/finder.hpp \
+		/usr/include/boost/algorithm/string/detail/predicate.hpp \
+		/usr/include/boost/algorithm/string/split.hpp \
+		/usr/include/boost/algorithm/string/iter_find.hpp \
+		/usr/include/boost/algorithm/string/concept.hpp \
+		/usr/include/boost/algorithm/string/find_iterator.hpp \
+		/usr/include/boost/algorithm/string/detail/find_iterator.hpp \
+		/usr/include/boost/function.hpp \
+		/usr/include/boost/function/detail/prologue.hpp \
+		/usr/include/boost/config/no_tr1/functional.hpp \
+		/usr/include/boost/function/function_base.hpp \
+		/usr/include/boost/detail/sp_typeinfo.hpp \
+		/usr/include/boost/type_traits/has_trivial_copy.hpp \
+		/usr/include/boost/type_traits/has_trivial_destructor.hpp \
+		/usr/include/boost/type_traits/composite_traits.hpp \
+		/usr/include/boost/ref.hpp \
+		/usr/include/boost/type_traits/alignment_of.hpp \
+		/usr/include/boost/type_traits/detail/size_t_trait_def.hpp \
+		/usr/include/boost/mpl/size_t.hpp \
+		/usr/include/boost/mpl/size_t_fwd.hpp \
+		/usr/include/boost/type_traits/detail/size_t_trait_undef.hpp \
+		/usr/include/boost/function_equal.hpp \
+		/usr/include/boost/function/function_fwd.hpp \
+		/usr/include/boost/mem_fn.hpp \
+		/usr/include/boost/bind/mem_fn.hpp \
+		/usr/include/boost/get_pointer.hpp \
+		/usr/include/boost/config/no_tr1/memory.hpp \
+		/usr/include/boost/bind/mem_fn_template.hpp \
+		/usr/include/boost/bind/mem_fn_vw.hpp \
+		/usr/include/boost/bind/mem_fn_cc.hpp \
+		/usr/include/boost/function/function0.hpp \
+		/usr/include/boost/function/detail/maybe_include.hpp \
+		/usr/include/boost/function/function_template.hpp \
+		/usr/include/boost/detail/no_exceptions_support.hpp \
+		/usr/include/boost/function/function1.hpp \
+		/usr/include/boost/function/function2.hpp \
+		/usr/include/boost/function/function3.hpp \
+		/usr/include/boost/function/function4.hpp \
+		/usr/include/boost/function/function5.hpp \
+		/usr/include/boost/function/function6.hpp \
+		/usr/include/boost/function/function7.hpp \
+		/usr/include/boost/function/function8.hpp \
+		/usr/include/boost/function/function9.hpp \
+		/usr/include/boost/function/function10.hpp \
+		/usr/include/boost/algorithm/string/detail/util.hpp \
+		/usr/include/boost/algorithm/string/join.hpp \
+		/usr/include/boost/algorithm/string/detail/sequence.hpp \
+		/usr/include/boost/algorithm/string/replace.hpp \
+		/usr/include/boost/algorithm/string/find_format.hpp \
+		/usr/include/boost/algorithm/string/detail/find_format.hpp \
+		/usr/include/boost/algorithm/string/detail/find_format_store.hpp \
+		/usr/include/boost/algorithm/string/detail/replace_storage.hpp \
+		/usr/include/boost/algorithm/string/detail/find_format_all.hpp \
+		/usr/include/boost/algorithm/string/formatter.hpp \
+		/usr/include/boost/algorithm/string/detail/formatter.hpp \
+		/usr/include/boost/algorithm/string/erase.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mldata.o mldata.cpp
 
 traintestsplit.o: traintestsplit.cpp traintestsplit.h
