@@ -56,6 +56,7 @@ protected:
     cv::Mat* responses;
     cv::Mat* train_sample;
     cv::Mat* test_sample;
+    cv::Mat* m_vars;
     char separator; // séparateur
     int compteur;
     int col_resp; //colonne des réponses

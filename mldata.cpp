@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 #include <traintestsplit.h>
 
 using boost::lexical_cast;
@@ -18,6 +19,7 @@ MLData::MLData()
     this->responses = NULL;
     this->train_sample = NULL;
     this->test_sample = NULL;
+    this->m_vars = NULL;
 }
 
 MLData::~MLData(){
@@ -25,12 +27,13 @@ MLData::~MLData(){
     if (responses != NULL) delete(responses);
     if (train_sample != NULL) delete(train_sample);
     if (test_sample != NULL) delete(test_sample);
+    if (m_vars != NULL) delete(m_vars);
 }
 
 //set_response_idx
 int MLData::set_response_idx(int val) {
-	col_resp = val;
-	return 0;
+    col_resp = val;
+    return 0;
 }
 
 //get_values
@@ -44,11 +47,22 @@ const cv::Mat* MLData::get_responses(void) {
     responses = new cv::Mat(valeurs->rows, 1, CV_32FC1);
 
     for (int i=0; i<valeurs->rows; ++i) {
-        responses->at<float>(i, 0) =valeurs->at<float>(i, col_resp);
+        responses->at<float>(i, 0) = valeurs->at<float>(i, col_resp);
     }
     return responses;
 }
 
+const cv::Mat* MLData::get_var_idx(void){
+    m_vars = new cv::Mat(valeurs->cols -1,1,CV_32SC1);
+    int curseur = 0;
+    for(int i=0;i<valeurs->cols;i++){
+        if( i != col_resp){
+            m_vars->at<int>(curseur,0) = i;
+            curseur++;
+        }
+    }
+    return m_vars;
+}
 
 //set_train_test_split
 void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
@@ -64,38 +78,42 @@ void MLData::set_train_test_split(const struct TrainTestSplit * spl) {
     std::cout << "TRAIN_SAMPLE_PART.COUNT = " << train_count << std::endl;
     std::cout << "MIX = " << spl->mix << std::endl;
 
-    train_sample = new cv::Mat(train_count, valeurs->cols, CV_32FC1);
-    test_sample = new cv::Mat((valeurs->rows - train_count), valeurs->cols, CV_32FC1);
+    train_sample = new cv::Mat(train_count, 1, CV_32SC1);
+    test_sample = new cv::Mat((valeurs->rows - train_count), 1, CV_32SC1);
 
-	// si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
-	if (spl->mix == true) {
+    // si mix est true, mélanger la matrice valeurs puis remplir train_sample et test_sample
+    if (spl->mix == true) {
 
         std::cout << "MIX = TRUE" << std::endl;
 
-		// traitement du train_sample
+        // traitement du train_sample
         std::vector<int> seeds;
         for (int i=0; i < valeurs->rows; ++i)
             seeds.push_back(i);
         cv::randShuffle(seeds);
 
         for (int i=0; i < train_count; ++i)
-            (valeurs->row(seeds[i])).copyTo(train_sample->row(i));
+            train_sample->at<int>(i,0) = seeds[i];
+        //(valeurs->row(seeds[i])).copyTo(train_sample->row(i));
 
         for (int i=train_count; i < valeurs->rows; ++i)
-            (valeurs->row(seeds[i])).copyTo(test_sample->row(i - train_count));
-		
-	// sinon, remplir sans mélanger
+            test_sample->at<int>(i - train_count,0) = seeds[i];
+        //(valeurs->row(seeds[i])).copyTo(test_sample->row(i - train_count));
+
+        // sinon, remplir sans mélanger
     } else {
 
         std::cout << "MIX = FALSE" << std::endl;
 
-		for (int i=0; i < valeurs->rows; ++i) {
-                if (i < train_count)
-                    (valeurs->row(i)).copyTo(train_sample->row(i)) ;
-				else
-                    (valeurs->row(i)).copyTo(test_sample->row(i - train_count));
+        for (int i=0; i < valeurs->rows; ++i) {
+            if (i < train_count)
+                train_sample->at<int>(i,0) = i;
+            //(valeurs->row(i)).copyTo(train_sample->row(i)) ;
+            else
+                test_sample->at<int>(i - train_count,0) = i;
+            //(valeurs->row(i)).copyTo(test_sample->row(i - train_count));
         }
-			
+
     }
 }
 
@@ -112,6 +130,7 @@ const cv::Mat* MLData::get_test_sample_idx(void) {
 
 int MLData::read_csv(QString filepath){
     QString ligne,nombre;
+    std::string std_ligne;
     QFile file(filepath);
     QTextStream in(&file);
     QStringList l,l2,liste_classes;
@@ -138,31 +157,37 @@ int MLData::read_csv(QString filepath){
         std::vector< double> ligne(nb_col,0);
 
         if(!l.isEmpty() && l.size() == nb_col){
-                for(int i=0;i<l.size();i++){
+
+            for(int i=0;i<l.size();i++){
+                std_ligne = l[i].toStdString();
+
+                if(separator != ' ')
+                    boost::erase_all(std_ligne," ");
+
+                try{
+                    val = lexical_cast<double>(std_ligne);
+                }
+                catch(bad_lexical_cast &){
                     try{
-                        val = lexical_cast<double>(l[i].toStdString());
+                        val = lexical_cast<int>(std_ligne);
                     }
                     catch(bad_lexical_cast &){
-                        try{
-                            val = lexical_cast<int>(l[i].toStdString());
-                        }
-                        catch(bad_lexical_cast &){
-                               val = 0;
-                        }
-                    }
-
-                    //std::cout << "col " << i << " = " << l[i].toStdString() << " / " << val << " , ";
-                    if( val == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 && l[i].compare("0.00") != 0){
-                        if(!liste_classes.contains(l[i])){
-                            //std::cout << "Nouvelle classe : " << l[i].toStdString() << " / " << (strtod(l[i].toStdString().c_str(),NULL)) << " / " << val  << " | ligne : " << nbLignes << std::endl;
-                            liste_classes.append(l[i]);
-                        }
-                        ligne[i] = liste_classes.indexOf(l[i]) + 1;
-                    }
-                    else{
-                        ligne[i] = val;
+                        val = 0;
                     }
                 }
+
+                //std::cout << "col " << i << " = " << l[i].toStdString() << " / " << val << " , ";
+                if( val == 0 && l[i].compare("0.0") != 0 && l[i].compare("0") != 0 && l[i].compare("0.00") != 0){
+                    if(!liste_classes.contains(l[i])){
+                        //std::cout << "Nouvelle classe : " << l[i].toStdString() << " / " << (strtod(l[i].toStdString().c_str(),NULL)) << " / " << val  << " | ligne : " << nbLignes << std::endl;
+                        liste_classes.append(l[i]);
+                    }
+                    ligne[i] = liste_classes.indexOf(l[i]) + 1;
+                }
+                else{
+                    ligne[i] = val;
+                }
+            }
         }
         mat.push_back(ligne);
         ligne.clear();

@@ -205,15 +205,9 @@ void MainWindow::test(QString fichier){
 
     MLData data;
     data.read_csv(fichier);
-    data.set_response_idx(0);
-    //const cv::Mat* values = data.get_values();
-    //const cv::Mat* responses = data.get_responses();
+    data.set_response_idx(data.get_values()->cols -1);
 
-    //std::cout << *values << std::endl;
-    //std::cout << *responses << std::endl;
-
-    float portion = 0.66666;
-    struct TrainTestSplit spl(portion, true);
+    struct TrainTestSplit spl(100, true);
 
     data.set_train_test_split(&spl);
 
@@ -222,32 +216,14 @@ void MainWindow::test(QString fichier){
 
     std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
     std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
-
-
-    //Ouverture et chargement du fichier
-    //CvMLData data;
-    //data.read_csv("/home/emip/Drone/Drone/data/iris/iris.data");
-    //cv::Mat m = data.get_values();
-    //cv::Mat m;
-    //data.set_response_idx(4);
-    //m = data.get_values();
-    //std::cout << "Matrice = " << m << std::endl;
+    std::cout << "Variables idx : " << *(data.get_var_idx()) << std::endl;
 
     //Intialisation
-    //cv::Mat train_sample,test_sample,samples,responses,vars;
-    //samples = cv::Mat(data.get_values(),true); //samples
-    //data.set_response_idx(4);
-    /*
-    std::map<std::string,int> results = data.get_class_labels_map();
-    CvTrainTestSplit spl(100,true);
-    data.set_train_test_split(&spl);
-
-    //Matrices
-
-    responses = cv::Mat(data.get_responses(),true);
-    train_sample = data.get_train_sample_idx();
-    test_sample = data.get_test_sample_idx();
-    vars = data.get_var_idx();
+    const cv::Mat* samples = data.get_values(); // samples
+    const cv::Mat* responses = data.get_responses();
+    const cv::Mat* train_sample = data.get_train_sample_idx();
+    const cv::Mat* test_sample = data.get_test_sample_idx();
+    const cv::Mat* vars = data.get_var_idx();
 
     //Classifier params
     CvSVMParams params;
@@ -259,47 +235,15 @@ void MainWindow::test(QString fichier){
     CvSVM svm;
 
     //Training
-    svm.train(samples,responses,vars,train_sample,params);
+    svm.train(*samples,*responses,*vars,*train_sample,params);
 
-    //Predict
-
-
-    //svm.predict()
-
-
-            //std::vector<float> e1, e2;
-            // float f1 = bayes.calc_error(data,CV_TRAIN_ERROR,&e1); // train
-            // float f2 = bayes.calc_error(data,CV_TEST_ERROR,&e2);//test
-
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-setosa"]));
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-versicolor"]));
-    ui->rtf_edit->appendPlainText(QString::number(results["Iris-virginica"]));
-
-    ui->rtf_edit->appendPlainText(QString::number(samples.rows));
-    ui->rtf_edit->appendPlainText(QString::number(samples.cols));
-    ui->rtf_edit->appendPlainText(QString::number(responses.rows));
-    ui->rtf_edit->appendPlainText(QString::number(responses.cols));
-    ui->rtf_edit->appendPlainText(QString::number(test_sample.size().width) + tr("x") + QString::number(test_sample.size().height) + tr(" : ensemble de test"));
-    ui->rtf_edit->appendPlainText(QString::number(vars.cols));
-    ui->rtf_edit->appendPlainText(QString::number(responses.at<float>(1,0)));
-
-    double* Mi;
-    QString ligne("");
-    QString res;
-    for(int i=0;i<test_sample.cols;i++){
-        ligne = QString::number(test_sample.at<int>(0,i)) + tr(" :");
-        samples.ptr<double>(test_sample.at<int>(0,i));
-        for(int j=0;j<vars.cols;j++){
-            res.setNum(Mi[j],'f');
-            ligne = ligne + tr(" ") + res;
-        }
-        ui->rtf_edit->appendPlainText(ligne);
+    cv::Mat predicted(test_sample->rows,1,CV_32FC1);
+    for(int i=0;i<predicted.rows;i++){
+        cv::Mat sample = samples->row(test_sample->at<int>(i,0));
+        predicted.at<float>(i,0) = svm.predict(sample);
     }
 
-
-    // ui->rtf_edit->appendPlainText(QString::number(f1) + tr(" % erreur en apprentissage"));
-    // ui->rtf_edit->appendPlainText(QString::number(f2) + tr(" % erreur en test"));
-*/
+    std::cout << "Predictions : " << predicted << std::endl;
 
 }
 
