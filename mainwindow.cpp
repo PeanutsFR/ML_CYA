@@ -205,9 +205,9 @@ void MainWindow::test(QString fichier){
 
     MLData data;
 
-    data.set_response_idx(data.get_values()->cols -1);
     data.set_delimiter(',');
     data.read_csv(fichier);
+    data.set_response_idx(data.get_values()->cols -1);
 
     struct TrainTestSplit spl(100, true);
 
