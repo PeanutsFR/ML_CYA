@@ -213,7 +213,7 @@ void MainWindow::test(QString fichier){
     //std::cout << *values << std::endl;
     //std::cout << *responses << std::endl;
 
-    struct TrainTestSplit spl(0.8, true);
+    struct TrainTestSplit spl(0.666666667, true);
 
     data.set_train_test_split(&spl);
 
@@ -226,20 +226,54 @@ void MainWindow::test(QString fichier){
     //std::cout << *(data.get_test_sample_idx()) << std::endl;
 
 
-    //Ouverture et chargement du fichier
-    //CvMLData data;
-    //data.read_csv("/home/emip/Drone/Drone/data/iris/iris.data");
-    //cv::Mat m = data.get_values();
-    //cv::Mat m;
-    //data.set_response_idx(4);
-    //m = data.get_values();
-    //std::cout << "Matrice = " << m << std::endl;
+    const cv::Mat* mat_iris = data.get_values();
+    const cv::Mat* responses = data.get_responses();
 
-    //Intialisation
-    //cv::Mat train_sample,test_sample,samples,responses,vars;
-    //samples = cv::Mat(data.get_values(),true); //samples
-    //data.set_response_idx(4);
-    /*
+
+    // ----- PARAMS -----
+    CvSVMParams params;
+    params.svm_type    = CvSVM::C_SVC;    params.kernel_type = CvSVM::LINEAR;
+    params.term_crit   = cvTermCriteria(CV_TERMCRIT_ITER, 100, 1e-6);
+
+    // ----- TRAIN -----
+    CvSVM SVM;
+    //SVM.train(data.get_train_sample_idx(), responses, cv::Mat(), cv::Mat(), params);
+    const cv::Mat* train_sample_mat = data.get_train_sample_idx();
+    SVM.train(*train_sample_mat, *responses, cv::Mat(), cv::Mat(), params);
+
+
+
+    cv::Mat predicted(data.get_test_sample_idx()->rows,1, CV_32F);
+    for(int i = 0; i < (data.get_test_sample_idx())->rows; i++) {
+        cv::Mat sample = (data.get_test_sample_idx())->row(i);
+        predicted.at<float>(i,0)= SVM.predict(sample);
+        float p = predicted.at<float>(i,0);
+
+        std::cout << "float p = " << p << std::endl;
+        if (p == 1) {
+            std::cout << "Iris-setosa" << std::endl;
+        } else if (p == 2) {
+            std::cout << "Iris-versicolor" << std::endl;
+        } else if (p == 3) {
+            std::cout << "Iris-virginica" << std::endl;
+        }
+    }
+
+
+//Ouverture et chargement du fichier
+//CvMLData data;
+//data.read_csv("/home/emip/Drone/Drone/data/iris/iris.data");
+//cv::Mat m = data.get_values();
+//cv::Mat m;
+//data.set_response_idx(4);
+//m = data.get_values();
+//std::cout << "Matrice = " << m << std::endl;
+
+//Intialisation
+//cv::Mat train_sample,test_sample,samples,responses,vars;
+//samples = cv::Mat(data.get_values(),true); //samples
+//data.set_response_idx(4);
+/*
     std::map<std::string,int> results = data.get_class_labels_map();
     CvTrainTestSplit spl(100,true);
     data.set_train_test_split(&spl);
