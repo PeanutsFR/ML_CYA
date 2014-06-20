@@ -163,10 +163,7 @@ void MainWindow::on_btn_load_clicked(){
     QString fichier = ui->txt_path->text();
     QFile file(fichier);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
-<<<<<<< HEAD
-=======
    // ui->rtf_edit->appendPlainText(file.readAll());
->>>>>>> ff1037eb03b7b86a4e0a920f262d95dda3b9b141
     test(fichier);
 }
 
