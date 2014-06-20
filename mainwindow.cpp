@@ -163,7 +163,6 @@ void MainWindow::on_btn_load_clicked(){
     QString fichier = ui->txt_path->text();
     QFile file(fichier);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
-    ui->rtf_edit->appendPlainText(file.readAll());
     test(fichier);
 }
 
@@ -207,6 +206,7 @@ void MainWindow::test(QString fichier){
 
     data.set_delimiter(',');
     data.read_csv(fichier);
+    //data.set_response_idx(0);
     data.set_response_idx(data.get_values()->cols -1);
 
     struct TrainTestSplit spl(100, true);
@@ -217,9 +217,9 @@ void MainWindow::test(QString fichier){
     std::cout << "rows x cols = " << (data.get_train_sample_idx())->rows << " x " << (data.get_train_sample_idx())->cols << "\n" << std::endl;
     //std::cout << *(data.get_train_sample_idx()) << std::endl;
 
-
+    std::cout << "--- TEST SAMPLE --- " << std::endl;
     std::cout << "rows x cols = " << (data.get_test_sample_idx())->rows << " x " << (data.get_test_sample_idx())->cols << std::endl;
-    std::cout << "--- TEST SAMPLE --- \n" << *(data.get_test_sample_idx()) << std::endl;
+    std::cout << *(data.get_test_sample_idx()) << std::endl;
     std::cout << "Variables idx : " << *(data.get_var_idx()) << std::endl;
 
     //Intialisation
